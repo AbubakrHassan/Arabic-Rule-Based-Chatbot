@@ -1,4 +1,5 @@
 import sys
+from devices import Fan
 import regex as re
 
 """
@@ -8,44 +9,45 @@ import regex as re
 home = {
     "room_a":
         [
-            "light",
-            "fan",
-            "ac",
+            Fan()
         ],
     "room_b":
         [
-            "light",
-            "fan",
-            "ac",
-            "heater"
+            Fan()
         ],
     "kitchen":
         [
-            "light",
-            "fan",
-            "oven",
+            Fan()
         ]
 }
 while True:
     user_reply = input(">> ")
-    if re.match("(hello|hi|hey|sup)", user_reply.lower()):
-        print("""Hello there, this is the home automation system designed to manage your devices at home,
-               what do you want me to do""")
+    if re.match(".*(سلام|كيفك|اهلا|اهلين|مرحب)", user_reply):
+        print("""مرحبًا بكم ، هذا هو النظام الاوتوماتيكي للمنزل المصمم لإدارة أجهزتك في المنزل ،
+                ماذا تريدني ان افعل""")
     else:
-        match = re.match("(turn on|open) the (.*) in (.*)", user_reply.lower())
-        if match:
-            device = match.group(2)
-            room = match.group(3)
-            for s_room in home.keys():
-                if s_room == room:
-                    for s_device in home[s_room]:
-                        if s_device == device:
-                            print("turning on the", device, "in", room)
-                            break
+        for device in [Fan()]:
+            for action in device.actions.keys():
+                matchers = device.actions[action]
+                for reg_ex in matchers:
+                    if re.match(reg_ex,user_reply):
+                        print("YES",action)
                     else:
-                        print("no such device", device, "in room", room)
-                    break
-            else:
-                print("no such room", room)
-        else:
-            print("I'm not yet designed to handle this request")
+                        print("NO",action)
+        # match = re.match("(turn on|open) the (.*) in (.*)", user_reply.lower())
+        # if match:
+        #     device = match.group(2)
+        #     room = match.group(3)
+        #     for s_room in home.keys():
+        #         if s_room == room:
+        #             for s_device in home[s_room]:
+        #                 if s_device == device:
+        #                     print("turning on the", device, "in", room)
+        #                     break
+        #             else:
+        #                 print("no such device", device, "in room", room)
+        #             break
+        #     else:
+        #         print("no such room", room)
+        # else:
+        #     print("I'm not yet designed to handle this request")
