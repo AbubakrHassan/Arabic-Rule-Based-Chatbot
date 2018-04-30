@@ -30,3 +30,73 @@ class Fan(Device):
     def action_close(self, match_object):
         print("تم قفل المروحة في ", self.room)
         return True
+
+class Light(Device):
+    def __init__(self, room=None):
+        self.type = "light"
+        self.room = room
+        self.actions = {
+            "open":
+                [
+                    "(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(نور|لمبه|اضاءه|ضوء|انارة)(.*)?"
+                ],
+            "close":
+                [
+                    "(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(نور|لمبه|اضاءه|ضوء|انارة)(.*)?"
+                ]
+        }
+
+    def action_open(self, match_object):
+        print("تم فتح الانارة في ", self.room)
+        return True
+
+    def action_close(self, match_object):
+        print("تم قفل الانارة في ", self.room)
+        return True
+
+
+class   Door(Device):
+    def __init__(self, room=None):
+        self.type = "door"
+        self.room = room
+        self.actions = {
+            "open":
+                [
+                    "(افتح|ادر||فتح|فك)(.*)(باب|قفل)(.*)?"
+                ],
+            "close":
+                [
+                    "(اغلق|اقفل)(.*)(باب|قفل)(.*)?"
+                ]
+        }
+
+    def action_open(self, match_object):
+        print("تم فتح الباب في ", self.room)
+        return True
+
+    def action_close(self, match_object):
+        print("تم قفل الباب في ", self.room)
+        return True
+
+class   AC(Device):
+    def __init__(self, room=None):
+        self.type = "AC"
+        self.room = room
+        self.actions = {
+             "open":
+                [
+                    "(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(مكيف|تكييف)(.*)?"
+                ],
+            "close":
+                [
+                    "(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(مكيف|تكييف)(.*)?"
+                ]
+        }
+
+    def action_open(self, match_object):
+        print("تم فتح التكييف في ", self.room)
+        return True
+
+    def action_close(self, match_object):
+        print("تم قفل التكييف في ", self.room)
+        return True
