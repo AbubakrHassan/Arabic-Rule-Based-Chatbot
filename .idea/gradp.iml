@@ -2,8 +2,15 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.6.3 (~/anaconda3/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+=======
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="R User Library" level="project" />
+    <orderEntry type="library" name="R Skeletons" level="application" />
+>>>>>>> adding_devices_b
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
