@@ -1,37 +1,51 @@
 import sys
-from devices import Fan
+from devices import Fan,Temperature
 import regex as re
 import normalizer
+
 """
     following dictionary contains all the devices in the house,
     each device should be defined as a class which is has it's own properties, right now just assume a string
 """
 home = {
-    "room_a":
+    "غرفه النوم":
         [
-            Fan()
+            Fan("غرفة النوم")
         ],
-    "room_b":
+    "غرفه الطعام":
         [
-            Fan()
+            Fan("غرفة الطعام")
         ],
-    "kitchen":
+    "المطبخ":
         [
-            Fan()
+            Fan("المطبخ"),
+            Temperature("المطبخ")
         ]
 }
 while True:
     user_reply = input(">> ")
     user_reply = normalizer.normalize(user_reply)
     if re.match(".*(سلام|كيفك|اهلا|اهلين|مرحب)", user_reply):
-        print("""مرحبًا بكم ، هذا هو النظام الاوتوماتيكي للمنزل المصمم لإدارة أجهزتك في المنزل ،
+        print("""مرحبًا بك ، هذا هو النظام الاوتوماتيكي المصمم لإدارة أجهزتك في المنزل ،
                 ماذا تريدني ان افعل""")
     else:
-        for device in [Fan()]:
+        room = None
+        for r in home.keys():
+            if user_reply.find(r) != -1:
+                room = r
+                break
+        else:
+            print("لم اعرف اين تقصد")
+            continue
+        is_action_done = False
+        for device in home[room]:
             for action in device.actions.keys():
                 matchers = device.actions[action]
                 for reg_ex in matchers:
-                    if re.match(reg_ex,user_reply):
-                        print("YES",action)
-                    else:
-                        print("NO",action)
+                    match_ob = re.match(reg_ex, user_reply)
+                    if match_ob:
+                        device.perform_action(action, match_ob)
+                        is_action_done=True
+                        break
+        if not is_action_done:
+            print("لم اعرف ماذا تقصد")

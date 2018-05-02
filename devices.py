@@ -15,11 +15,11 @@ class Fan(Device):
         self.actions = {
             "open":
                 [
-                    "(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(مروحه)(.*)(0-6)?"
+                    ".*(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(مروحه)(.*)(0-6)?.*"
                 ],
             "close":
                 [
-                    "(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(مروحه)"
+                    ".*(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(مروحه).*"
                 ]
         }
 
@@ -29,4 +29,22 @@ class Fan(Device):
 
     def action_close(self, match_object):
         print("تم قفل المروحة في ", self.room)
+        return True
+
+
+class Temperature(Device):
+    def __init__(self, room=None):
+        self.type = "temp"
+        self.room = room
+        self.actions = {
+            "read_temp":
+                [
+                    ".*(حراره).*"
+                ]
+        }
+
+    def action_read_temp(self, match_object):
+        # perform reading the tempreture
+        t = 32  # place holder for the temperature
+        print("درجة الحرارة في", self.room, " هي ", t)
         return True
