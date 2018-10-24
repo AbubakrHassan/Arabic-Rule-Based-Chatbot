@@ -1,9 +1,0 @@
-<aiml version="1.0.1" encoding="UTF-8">
-    <category>
-        <pattern>HELLO</pattern>
-        <template>
-            Hello, <star index="1"/>!
-        </template>
-    </category>
-
-</aiml>

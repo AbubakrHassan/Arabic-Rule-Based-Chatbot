@@ -1,1 +1,6 @@
-.idea/*
+./.idea/*
+./_pycache_
+./aiml_files
+.gitignore
+./bot_brain.brn
+
