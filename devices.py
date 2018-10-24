@@ -24,12 +24,13 @@ class Fan(Device):
         }
 
     def action_open(self, match_object):
-        print("تم فتح المروحة في ", self.room)
+        print("تم فتح المروحة في ", self.room.name)
         return True
 
     def action_close(self, match_object):
-        print("تم قفل المروحة في ", self.room)
+        print("تم قفل المروحة في ", self.room.name)
         return True
+
 
 class Temperature(Device):
     def __init__(self, room=None):
@@ -45,7 +46,9 @@ class Temperature(Device):
     def action_read_temp(self, match_object):
         # perform reading the tempreture
         t = 32  # place holder for the temperature
-        print("درجة الحرارة في", self.room, " هي ", t)
+        print("درجة الحرارة في", self.room.name, " هي ", t)
+
+
 class Light(Device):
     def __init__(self, room=None):
         self.type = "light"
@@ -53,24 +56,24 @@ class Light(Device):
         self.actions = {
             "open":
                 [
-                    "(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(نور|لمبه|اضاءه|ضوء|انارة)(.*)?"
+                    "(افتح|شغل|ادر|تشغيل|فتح|اداره|تدوير)(.*)(نور|لمبه|اضاءه|ضوء|اناره)(.*)?"
                 ],
             "close":
                 [
-                    "(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(نور|لمبه|اضاءه|ضوء|انارة)(.*)?"
+                    "(قفل|وقف|اغلق|سد|توقيف|اغلاق|تقفيل|اقفال|تغليق)(.*)(نور|لمبه|اضاءه|ضوء|اناره)(.*)?"
                 ]
         }
 
     def action_open(self, match_object):
-        print("تم فتح الانارة في ", self.room)
+        print("تم فتح الانارة في ", self.room.name)
         return True
 
     def action_close(self, match_object):
-        print("تم قفل الانارة في ", self.room)
+        print("تم قفل الانارة في ", self.room.name)
         return True
 
 
-class   Door(Device):
+class Door(Device):
     def __init__(self, room=None):
         self.type = "door"
         self.room = room
@@ -86,19 +89,20 @@ class   Door(Device):
         }
 
     def action_open(self, match_object):
-        print("تم فتح الباب في ", self.room)
+        print("تم فتح الباب في ", self.room.name)
         return True
 
     def action_close(self, match_object):
-        print("تم قفل الباب في ", self.room)
+        print("تم قفل الباب في ", self.room.name)
         return True
 
-class   AC(Device):
+
+class AC(Device):
     def __init__(self, room=None):
         self.type = "AC"
         self.room = room
         self.actions = {
-             "open":
+            "open":
                 [
                     "(افتح|شغل|ادر|تشغيل|فتح|ادارة|تدوير)(.*)(مكيف|تكييف)(.*)?"
                 ],
@@ -109,9 +113,9 @@ class   AC(Device):
         }
 
     def action_open(self, match_object):
-        print("تم فتح التكييف في ", self.room)
+        print("تم فتح التكييف في ", self.room.name)
         return True
 
     def action_close(self, match_object):
-        print("تم قفل التكييف في ", self.room)
+        print("تم قفل التكييف في ", self.room.name)
         return True

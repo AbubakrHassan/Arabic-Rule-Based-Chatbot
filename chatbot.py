@@ -1,5 +1,5 @@
-import sys
-from devices import Fan,Temperature
+from devices import Fan, Temperature, AC, Door, Light
+from core import User, Room, ROOMS
 import regex as re
 import normalizer
 
@@ -7,31 +7,46 @@ import normalizer
     following dictionary contains all the devices in the house,
     each device should be defined as a class which is has it's own properties, right now just assume a string
 """
+welcome_message = """مرحبًا بك ، هذا هو النظام الاوتوماتيكي المصمم لإدارة أجهزتك في المنزل ،
+                ماذا تريدني ان افعل"""
+
+abubakr = User("Abubakr")
+bedroom = Room("غرفه ابوبكر", room_type=ROOMS.BEDROOM, owner=abubakr)
+bathroom = Room("الحمام", room_type=ROOMS.BATHROOM, owner=abubakr)
+kitchen = Room("مطبخ", room_type=ROOMS.KITCHEN, owner=abubakr)
+
 home = {
-    "غرفه النوم":
+    bedroom:
         [
-            Fan("غرفة النوم")
+            Fan(bedroom),
+            AC(bedroom),
+            Door(bedroom),
+            Light(bedroom),
+            Temperature(bedroom)
         ],
-    "غرفه الطعام":
+    bathroom:
         [
-            Fan("غرفة الطعام")
+            Door(bathroom),
+            Light(bathroom)
         ],
-    "المطبخ":
+    kitchen:
         [
-            Fan("المطبخ"),
-            Temperature("المطبخ")
+            Fan(kitchen),
+            AC(kitchen),
+            Door(kitchen),
+            Light(kitchen),
+            Temperature(kitchen)
         ]
 }
 while True:
     user_reply = input(">> ")
     user_reply = normalizer.normalize(user_reply)
-    if re.match(".*(سلام|كيفك|اهلا|اهلين|مرحب)", user_reply):
-        print("""مرحبًا بك ، هذا هو النظام الاوتوماتيكي المصمم لإدارة أجهزتك في المنزل ،
-                ماذا تريدني ان افعل""")
+    if re.match(".*(سلام|كيفك|اهلا|اهلين|مرحب).*", user_reply):
+        print(welcome_message)
     else:
         room = None
         for r in home.keys():
-            if user_reply.find(r) != -1:
+            if r.match(user_reply):
                 room = r
                 break
         else:
@@ -45,7 +60,7 @@ while True:
                     match_ob = re.match(reg_ex, user_reply)
                     if match_ob:
                         device.perform_action(action, match_ob)
-                        is_action_done=True
+                        is_action_done = True
                         break
         if not is_action_done:
             print("لم اعرف ماذا تقصد")
